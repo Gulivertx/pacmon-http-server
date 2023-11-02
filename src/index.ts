@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import http from "http";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import cors from "cors";
 import luxtronik from "luxtronik2";
 
 dotenv.config();
@@ -13,7 +14,14 @@ const hostPort: number = parseInt(process.env.HOST_PORT || '8888', 10);
 const app: Express = express();
 const server: http.Server = http.createServer(app);
 
+const corsOptions ={
+    origin:'*',
+    credentials:true,
+    optionSuccessStatus: 200
+}
+
 app.use(bodyParser.json())
+app.use(cors(corsOptions))
 
 const pump = new luxtronik.createConnection(hostIp, hostPort);
 
